@@ -95,8 +95,9 @@ This project follows Phase 3 requirements with the standardized structure:
 
 1. **Clone and Setup**:
    ```bash
-   cd "finance tracker"
-   pipenv install
+   git clone git@github.com:stvlutta/phase-3-project-finance-tracker-and-analyzer.git
+   cd phase-3-project-finance-tracker-and-analyzer
+   pipenv install  # Install project dependencies
    pipenv shell
    ```
 
