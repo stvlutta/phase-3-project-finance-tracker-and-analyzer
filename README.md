@@ -552,19 +552,6 @@ python3 -m lib.cli migration-current
 python3 -m lib.cli migration-history
 ```
 
-## Contributing
-
-This project demonstrates comprehensive Phase 3 Python development skills including:
-
-- **Pipenv Environment Management**: Project-specific dependency management
-- **External Library Integration**: SQLAlchemy, Click, Rich
-- **SQLAlchemy ORM**: Complex database relationships and schema design
-- **Database Relationships**: One-to-one, one-to-many, many-to-many implementations
-- **CLI Best Practices**: Rich formatting, input validation, error handling
-- **Data Structure Mastery**: Strategic use of lists, dicts, and tuples
-- **Project Organization**: Clean separation of concerns with lib structure
-- **Development Tools**: Seeding, debugging, and monitoring utilities
-
 ## License
 
 MIT License - See LICENSE file for details
