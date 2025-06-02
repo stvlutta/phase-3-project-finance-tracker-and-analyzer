@@ -118,6 +118,9 @@ def create_sample_user_profiles(users: List[User]) -> List[UserProfile]:
     with get_db_session() as session:
         for i, user in enumerate(users):
             if i < len(profile_data):
+                # Merge the user into the current session to avoid DetachedInstanceError
+                user = session.merge(user)
+                
                 # Check if profile already exists
                 existing_profile = session.query(UserProfile).filter_by(user_id=user.id).first()
                 if existing_profile:
@@ -198,7 +201,12 @@ def create_sample_transactions(users: List[User], tags: List[Tag]) -> List[Trans
     created_transactions = []
     
     with get_db_session() as session:
+        # Merge tags into the current session to avoid DetachedInstanceError
+        tags = [session.merge(tag) for tag in tags]
+        
         for user in users:
+            # Merge the user into the current session to avoid DetachedInstanceError
+            user = session.merge(user)
             # Generate transactions for the last 6 months
             start_date = date.today() - timedelta(days=180)
             current_date = start_date
@@ -323,6 +331,8 @@ def create_sample_budgets(users: List[User]) -> List[Budget]:
     
     with get_db_session() as session:
         for user in users:
+            # Merge the user into the current session to avoid DetachedInstanceError
+            user = session.merge(user)
             # Create 3-5 random budgets per user
             num_budgets = random.randint(3, 5)
             selected_budgets = random.sample(budget_templates, num_budgets)
@@ -376,6 +386,8 @@ def create_sample_savings_goals(users: List[User]) -> List[SavingsGoal]:
     
     with get_db_session() as session:
         for user in users:
+            # Merge the user into the current session to avoid DetachedInstanceError
+            user = session.merge(user)
             # Create 2-4 random goals per user
             num_goals = random.randint(2, 4)
             selected_goals = random.sample(goal_templates, num_goals)
