@@ -226,14 +226,7 @@ def create_sample_transactions(users: List[User], tags: List[Tag]) -> List[Trans
                         user_id=user.id
                     )
                     
-                    # Add random tags
-                    if category == "Salary":
-                        work_tag = next((t for t in tags if t.name == "work"), None)
-                        recurring_tag = next((t for t in tags if t.name == "recurring"), None)
-                        if work_tag:
-                            transaction.tags.append(work_tag)
-                        if recurring_tag:
-                            transaction.tags.append(recurring_tag)
+                    # Skip tags for income transactions for now
                     
                     session.add(transaction)
                     created_transactions.append(transaction)
@@ -289,26 +282,15 @@ def create_sample_transactions(users: List[User], tags: List[Tag]) -> List[Trans
                             "Subscription": ["recurring"]
                         }
                         
-                        tag_names = tag_mapping.get(category, [])
-                        for tag_name in tag_names:
-                            tag = next((t for t in tags if t.name == tag_name), None)
-                            if tag:
-                                transaction.tags.append(tag)
-                        
-                        # Add one-time or recurring tag
-                        if category in ["Rent", "Utilities", "Internet", "Phone", "Gym", "Subscription"]:
-                            recurring_tag = next((t for t in tags if t.name == "recurring"), None)
-                            if recurring_tag and recurring_tag not in transaction.tags:
-                                transaction.tags.append(recurring_tag)
-                        else:
-                            one_time_tag = next((t for t in tags if t.name == "one-time"), None)
-                            if one_time_tag and random.random() < 0.3:
-                                transaction.tags.append(one_time_tag)
+                        # Skip tags for expense transactions for now
                         
                         session.add(transaction)
                         created_transactions.append(transaction)
                 
                 current_date += timedelta(days=1)
+            
+            # Flush after each user to avoid accumulating too many changes
+            session.flush()
     
     return created_transactions
 
